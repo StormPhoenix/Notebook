@@ -1,3 +1,3 @@
 git add ./*
-git commit -m "Submit files."
+git commit -m "Sync files."
 git push
