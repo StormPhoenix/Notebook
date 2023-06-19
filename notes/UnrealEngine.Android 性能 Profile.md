@@ -2,7 +2,7 @@
 id: jjhcri1iube4g69pcgpmyp8
 title: Android 性能 Profile
 desc: ''
-updated: 1687146087331
+updated: 1687173449018
 created: 1686903844365
 ---
 
@@ -39,3 +39,7 @@ FPS=32左右。
 
 - 关闭地形 + 树 + 草 + Static/Skeletal Mesh
 FPS=35左右
+
+测试机型：Xiaomi 13，骁龙 8 Gen 2
+
+测试了不同物件类型对帧率的影响，包括：树、草、地形、Static
