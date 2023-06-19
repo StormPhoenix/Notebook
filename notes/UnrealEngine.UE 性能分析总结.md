@@ -2,7 +2,7 @@
 id: 882z253bip79z759q61qu4a
 title: UE 性能分析总结
 desc: ''
-updated: 1687197223053
+updated: 1687197907093
 created: 1687155541006
 ---
 
@@ -57,7 +57,8 @@ TODO
 
 
 TODO 参考：
-Unreal Insight 原理分析 https://zhuanlan.zhihu.com/p/458086085
+（重点参考）Unreal Insight 原理分析 https://zhuanlan.zhihu.com/p/458086085
+
 
 Unreal Insight Trace 介绍 https://docs.unrealengine.com/4.26/zh-CN/TestingAndOptimization/PerformanceAndProfiling/UnrealInsights/Reference/Trace/
 
