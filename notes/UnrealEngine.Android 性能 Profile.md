@@ -2,30 +2,40 @@
 id: jjhcri1iube4g69pcgpmyp8
 title: Android 性能 Profile
 desc: ''
-updated: 1686906811552
+updated: 1687146087331
 created: 1686903844365
 ---
 
-测试 Case: 迅速转动视角，帧率下降四五帧。
+HXNext 项目性能 Profile
 
-#### RenderThread Insight
+#### 开关说明
 
-DeleteSceneRenderer
+- terrain.visible 0：地形不显示
+- foliage.cullall 1：树木不显示
+- vege.enable 0：草不显示
+- showflag.staticmeshes 0：静态物件不显示
+- show PostProcessing 后处理开关
 
-- 物件从场景中删除所用耗时增加
-FScene_RemovePrimitiveSceneInfos 用时增多，3.1 ms
+#### Case1：跑动转动的情况，帧率下降 4 5 帧，但对比 Unreal Insight 又没法查出是什么地方有问题。
 
-- 动态物件增多，动态创建的 Mesh 耗时增多
-FSceneRenderer_GatherDynamicMeshElements 8.3 ms
+#### Case2：树林内静止
+- 渲染所有物件。
+FPS：23~33
 
-- 有新物件进入，准备每个 Pass 所需指令用时增加
-多个 MeshDrawCommandPassSetupTask 并行执行，10 个左右 Pass 分布在 4 个后台线程。Render Thread 等待上述 Task 执行完毕（同时后台会处理一些 CharactorMesh0 之类的任务）。
+- 关闭地形
+无较明显变化
 
+- 关闭地形 + 树
+无较明显变化
 
-测试 Case：静止不动
+- 关闭地形 + 树 + 草
+无明显变化
 
-#### RenderThread Insight
+- 关闭地形 + 树 + 草 + Skeletal Mesh
+有 4 ms 左右的的开销，帧率提升
 
-- CPU 处理任务太多
+- 关闭地形 + 树 + 草 + Static Mesh
+FPS=32左右。
 
-RenderThread 只有等后台的 MeshDrawCommandPassSetupTask 执行完，才会提交绘制。UnrealInsight 显示当后台 Task 被执行完毕的时候，RenderThread 依旧处于较长的等待时间，说明 CPU 在忙于其他任务。
+- 关闭地形 + 树 + 草 + Static/Skeletal Mesh
+FPS=35左右
