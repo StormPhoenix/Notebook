@@ -2,7 +2,7 @@
 id: b0rf9yse5p66nn77fz96tdd
 title: Todo List
 desc: ''
-updated: 1686919603698
+updated: 1687249230615
 created: 1686919457373
 ---
 
@@ -67,3 +67,8 @@ halo1 切换到 halo2，学习研究下 quake 和 https://zhuanlan.zhihu.com/p/1
 https://www.rust-lang.org/tools/install
 
 [[UnrealEngine.todo list]]
+
+Dendron 手动删除文件，但在 Tree View 里面依然显示
+https://wiki.dendron.so/notes/a6c03f9b-8959-4d67-8394-4d204ab69bfe/
+
+Markdown 怎么写好看点？

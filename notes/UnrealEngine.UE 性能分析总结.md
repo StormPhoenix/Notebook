@@ -2,7 +2,7 @@
 id: 882z253bip79z759q61qu4a
 title: UE 性能分析总结
 desc: ''
-updated: 1687241833110
+updated: 1687266611716
 created: 1687155541006
 ---
 
@@ -16,15 +16,13 @@ created: 1687155541006
 
 Unreal Insight 是新一代 UE Profile 工具，比 Stat 更强大。
 
-1. Unreal Insight 面板布局
+#### Unreal Insight 面板布局
 
 - Frame Plane：双击目标标签，可高亮显示所有目标标签，方便查看耗时变化。
 
-- Timer Plane
+#### 性能分析
 
-2. 性能分析
-
-  UE 提供了一套宏模板让用户自定义标签来分析性能瓶颈区域
+1. UE 提供了一套宏模板让用户自定义标签来分析性能瓶颈区域
 
 - TRACE_CPUPROFILER_EVENT_SCOPE(Name)：Unreal Insight 在帧面板中展示的每一段时间消耗，都在源码中对应一段 Trace 标签。用户在源码中添加 TRACE_CPUPROFILER_EVENT_SCOPE(Name) 宏来自定义 Trace 标签，用来查看目标函数在每帧调用耗时。其中 Name 由用户自定义，最终在 Unreal Insight 中展示。
 
@@ -34,7 +32,7 @@ Unreal Insight 是新一代 UE Profile 工具，比 Stat 更强大。
 
 - TRACE_CPUPROFILER_EVENT_SCOPE_TEXT_ON_CHANNEL(Name, Channel)：自定义 Trace 标签属于哪个 Channel。
 
-##### 用 Channel 开启/关闭不同类别的 Trace
+2. 用 Channel 开启/关闭不同类别的 Trace
 
 - UE_TRACE_CHANNEL_DEFINE：相当于一个开关，用于控制 Unreal Insight 里面可以看到哪些 Trace 标签。
 
@@ -46,7 +44,9 @@ Unreal Insight 是新一代 UE Profile 工具，比 Stat 更强大。
 
   所以，如果希望将自定义的 Trace 标签归属于某个 Channel，可以使用 TRACE_CPUPROFILER_EVENT_SCOPE_ON_CHANNEL(Name, Channel) 宏。
 
-##### SCOPED_NAMED_EVENT_TEXT
+- SCOPED_NAMED_EVENT_TEXT
+- SCOPED_NAMED_EVENT
+  宏展开之后发现，间接调用了 TRACE_CPUPROFILER_EVENT_SCOPE，新增了 FScopedNamedEventStatic 变量。
 
 TODO
 
