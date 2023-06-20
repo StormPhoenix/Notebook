@@ -2,7 +2,7 @@
 id: wry5zchspuiqht0an6b6nzy
 title: todo list
 desc: ''
-updated: 1687174533843
+updated: 1687241140085
 created: 1686918547118
 ---
 
@@ -24,4 +24,13 @@ https://www.google.com/search?q=waituntiltaskcompletes+unreal&rlz=1C1GCEU_zh-HK_
 - Unreal Engine 中 Tick 工作方式，关注 FTickFunctionTask https://zhuanlan.zhihu.com/p/511580780
 - Tick 小结：https://blog.ch-wind.com/ue4-tick-note/
 
+#### Unreal Engine 使用 tips
 
+https://www.unrealdirective.com/tips
+
+比如Dumpticks，给了个优化方法，让结果更可读。
+https://www.unrealdirective.com/tip/dumpticks
+Console Variables Editor，可视化的配置
+https://www.unrealdirective.com/tip/the-console-variables-editor-plugin
+Actor Palette，可以跨Level复制Actor
+https://www.unrealdirective.com/tip/the-actor-palette
