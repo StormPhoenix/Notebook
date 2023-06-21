@@ -2,7 +2,7 @@
 id: b0rf9yse5p66nn77fz96tdd
 title: Todo List
 desc: ''
-updated: 1687249230615
+updated: 1687342173637
 created: 1686919457373
 ---
 
@@ -72,3 +72,6 @@ Dendron 手动删除文件，但在 Tree View 里面依然显示
 https://wiki.dendron.so/notes/a6c03f9b-8959-4d67-8394-4d204ab69bfe/
 
 Markdown 怎么写好看点？
+
+void FSceneRenderer::GatherShadowDynamicMeshElements()
+    SortedShadowsForShadowDepthPass.ShadowMapAtlases.Num()

@@ -2,7 +2,7 @@
 id: wry5zchspuiqht0an6b6nzy
 title: todo list
 desc: ''
-updated: 1687241140085
+updated: 1687342173639
 created: 1686918547118
 ---
 
@@ -34,3 +34,5 @@ Console Variables Editor，可视化的配置
 https://www.unrealdirective.com/tip/the-console-variables-editor-plugin
 Actor Palette，可以跨Level复制Actor
 https://www.unrealdirective.com/tip/the-actor-palette
+
+了解 FScenePrimitiveOctree 的原理，检查 Dynamic Shadow Setup
