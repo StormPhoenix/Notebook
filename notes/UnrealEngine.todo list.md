@@ -35,6 +35,8 @@ https://www.unrealdirective.com/tip/the-console-variables-editor-plugin
 Actor Palette，可以跨Level复制Actor
 https://www.unrealdirective.com/tip/the-actor-palette
 
+了解 FScenePrimitiveOctree 的原理，检查 Dynamic Shadow Setup
+
 https://www.uecosmic.com/article/25
 
 # 资源管理
