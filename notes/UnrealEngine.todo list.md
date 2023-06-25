@@ -2,7 +2,7 @@
 id: wry5zchspuiqht0an6b6nzy
 title: todo list
 desc: ''
-updated: 1687241140085
+updated: 1687354455812
 created: 1686918547118
 ---
 
@@ -34,3 +34,12 @@ Console Variables Editor，可视化的配置
 https://www.unrealdirective.com/tip/the-console-variables-editor-plugin
 Actor Palette，可以跨Level复制Actor
 https://www.unrealdirective.com/tip/the-actor-palette
+
+https://www.uecosmic.com/article/25
+
+# 资源管理
+UE 资源管理：引擎打包资源分析 https://imzlp.com/posts/22570/
+
+[Cook单个资产](https://www.google.com/search?q=ue4+cook%E5%8D%95%E4%B8%AA%E8%B5%84%E6%BA%90&newwindow=1&sxsrf=APwXEdevoQxk42zK8XAfi3yCd3LdtrJ-bw%3A1687354094986&ei=7vqSZM3gO6WF2roPwdurGA&oq=UE+%E7%83%98%E5%9F%B9&gs_lcp=Cgxnd3Mtd2l6LXNlcnAQARgCMgoIABBHENYEELADMgoIABBHENYEELADMgoIABBHENYEELADMgoIABBHENYEELADMgoIABBHENYEELADMgoIABBHENYEELADMgoIABBHENYEELADMgoIABBHENYEELADMgoIABBHENYEELADMgoIABBHENYEELADSgQIQRgAUABYAGC3BmgBcAF4AIABAIgBAJIBAJgBAMABAcgBCg&sclient=gws-wiz-serp)
+
+Cook 单个资产 https://zhuanlan.zhihu.com/p/336404977
