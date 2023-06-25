@@ -2,7 +2,7 @@
 id: 882z253bip79z759q61qu4a
 title: UE 性能分析总结
 desc: ''
-updated: 1687354582332
+updated: 1687713602829
 created: 1687155541006
 ---
 
@@ -55,6 +55,41 @@ Channel 的作用是只显示某些类别的 Trace 标签。上文中通过宏  
 - SCOPED_NAMED_EVENT_TEXT
 - SCOPED_NAMED_EVENT
   宏展开后可以发现它间接调用了 TRACE_CPUPROFILER_EVENT_SCOPE，并新增了 FScopedNamedEventStatic 变量。
+
+### Trace 实现原理
+
+TRACE_CPUPROFILER_EVENT_SCOPE_ON_CHANNEL_STR 展开得到两个变量：__CpuProfilerEventSpecIdXXX，__CpuProfilerEventScopeXXX，前者 uint32 类型，为 Trace 的 ID，后者类型为 FCpuProfilerTrace::FEventScope。检查 FEventScope 的实现，如下
+
+```
+struct FEventScope 
+{
+    FEventScope(uint32 InSpecId, const Trace::FChannel& Channel) // 构造函数
+        : bEnabled(Channel | CpuChannel)
+    {
+        if (bEnabled) {
+            OutputBeginEvent(InSpecId);
+        }
+    }
+
+    ~FEventScope() 
+    {
+        if (bEnabled)
+        {
+            OutputEndEvent();
+        }
+    }
+
+    bool bEnabled;
+}
+```
+
+发现 FEventScope 在被定义的作用域里创建、销毁时会判断 bEnabled 调用 OutputBeginEvent()、OutputEndEvent() 函数，而 bEnabled 指当前是否要启用该 Trace 标签，代码中的实现是：
+
+```
+bEnabled(Channel | CpuChannel)
+```
+
+说明只要 -trace 包含 cpu，则通过 TRACE_CPUPROFILER_EVENT_SCOPE_XXX 宏来定义的 trace 标签都会输出到 Unreal Insights。
 
 TODO
 
