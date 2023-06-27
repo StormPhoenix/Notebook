@@ -2,7 +2,7 @@
 id: wry5zchspuiqht0an6b6nzy
 title: todo list
 desc: ''
-updated: 1687354455812
+updated: 1687851492794
 created: 1686918547118
 ---
 
@@ -45,3 +45,25 @@ UE 资源管理：引擎打包资源分析 https://imzlp.com/posts/22570/
 [Cook单个资产](https://www.google.com/search?q=ue4+cook%E5%8D%95%E4%B8%AA%E8%B5%84%E6%BA%90&newwindow=1&sxsrf=APwXEdevoQxk42zK8XAfi3yCd3LdtrJ-bw%3A1687354094986&ei=7vqSZM3gO6WF2roPwdurGA&oq=UE+%E7%83%98%E5%9F%B9&gs_lcp=Cgxnd3Mtd2l6LXNlcnAQARgCMgoIABBHENYEELADMgoIABBHENYEELADMgoIABBHENYEELADMgoIABBHENYEELADMgoIABBHENYEELADMgoIABBHENYEELADMgoIABBHENYEELADMgoIABBHENYEELADMgoIABBHENYEELADMgoIABBHENYEELADSgQIQRgAUABYAGC3BmgBcAF4AIABAIgBAJIBAJgBAMABAcgBCg&sclient=gws-wiz-serp)
 
 Cook 单个资产 https://zhuanlan.zhihu.com/p/336404977
+
+# HX 引擎 DISM 实现
+HXPgcInstancedStaticMeshComponent.cpp && HISM
+DynamicInstancedStaticMeshComponent.cpp
+
+这两个都继承了 UInstancedStaticMeshComponent，创建的网格代理也继承了 FInstancedStaticMeshSceneProxy，所以直接参考这个两个的实现。
+- UInstancedStaticMeshComponent
+- FInstancedStaticMeshSceneProxy
+
+# UE Render Thread 消耗时间的几个阶段
+
+判断可见性 -> 收集 Dynamic 物件 -> 收集 Shadow 物件 -> 收集 Shadow 物件的 Dynamic shadow setup
+
+FSceneRenderer::BeginInitDynamicSHadows
+- GatherShadowPrimitives
+- STAT_ShadowSceneOctreeTraversal
+- GatherShadowPrimitives
+
+Dynamic shadow setup
+- STAT_Shadow_GatherDynamicMeshElements ->STAT_HierarchicalInstancedStaticMeshSceneProxy_GetMeshElements
+
+# 通读 UE 渲染管线整个流程

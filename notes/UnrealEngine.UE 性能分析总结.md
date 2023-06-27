@@ -2,7 +2,7 @@
 id: 882z253bip79z759q61qu4a
 title: UE 性能分析总结
 desc: ''
-updated: 1687713602829
+updated: 1687743973140
 created: 1687155541006
 ---
 
@@ -64,7 +64,7 @@ TRACE_CPUPROFILER_EVENT_SCOPE_ON_CHANNEL_STR 展开得到两个变量：__CpuPro
 struct FEventScope 
 {
     FEventScope(uint32 InSpecId, const Trace::FChannel& Channel) // 构造函数
-        : bEnabled(Channel | CpuChannel)
+        : bEnabled(Channel | CpuChannel) // 如果 -trace 包含 cpu 或自定义的 channel，则 bEnabled 为 true
     {
         if (bEnabled) {
             OutputBeginEvent(InSpecId);
