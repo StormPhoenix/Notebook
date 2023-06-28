@@ -2,7 +2,7 @@
 id: wry5zchspuiqht0an6b6nzy
 title: todo list
 desc: ''
-updated: 1687851492794
+updated: 1687922595629
 created: 1686918547118
 ---
 
@@ -67,3 +67,9 @@ Dynamic shadow setup
 - STAT_Shadow_GatherDynamicMeshElements ->STAT_HierarchicalInstancedStaticMeshSceneProxy_GetMeshElements
 
 # 通读 UE 渲染管线整个流程
+
+# UE 卡通渲染
+https://zhuanlan.zhihu.com/p/559373782
+
+# StringTable
+StringTable 不存在时的懒加载机制，参考 FText 的构造参数 EStringTableLoadingPolicy
