@@ -2,7 +2,7 @@
 id: 882z253bip79z759q61qu4a
 title: UE 性能分析总结
 desc: ''
-updated: 1687743973140
+updated: 1687971935261
 created: 1687155541006
 ---
 
@@ -14,13 +14,17 @@ created: 1687155541006
 
 # Unreal Insight Profile
 
-Unreal Insight 是新一代 UE Profile 工具，比 Stat 更强大。
+[Unreal Insights in unreal engine](https://docs.unrealengine.com/5.2/en-US/unreal-insights-in-unreal-engine/)
 
-## Unreal Insight 面板布局
+Unreal Insight 是新一代 UE Profile 工具，比 Stat 更强大。在 UE 中如果使用了如下标签：
 
-- Frame Plane：双击目标标签，可高亮显示所有目标标签，方便查看耗时变化。
+- TRACE_CPUPROFILER_EVENT_SCOPE(Name)
+- TRACE_BOOKMARK(Name)
+- Stat 标签，如 SCOPE_CYCLE_COUNTER(Name)
+  
+这些标签记录的数据会通过 TCP 连接被 UnrealInsights 程序监听，显示到面板上，供用户分析性能瓶颈。
 
-## 性能分析
+## Profile 数据收集
 
 UE 提供了一套宏模板让用户自定义标签来分析性能瓶颈区域
 
@@ -56,7 +60,9 @@ Channel 的作用是只显示某些类别的 Trace 标签。上文中通过宏  
 - SCOPED_NAMED_EVENT
   宏展开后可以发现它间接调用了 TRACE_CPUPROFILER_EVENT_SCOPE，并新增了 FScopedNamedEventStatic 变量。
 
-### Trace 实现原理
+## 实现原理
+### Unreal Insights 
+### Trace 
 
 TRACE_CPUPROFILER_EVENT_SCOPE_ON_CHANNEL_STR 展开得到两个变量：__CpuProfilerEventSpecIdXXX，__CpuProfilerEventScopeXXX，前者 uint32 类型，为 Trace 的 ID，后者类型为 FCpuProfilerTrace::FEventScope。检查 FEventScope 的实现，如下
 
@@ -89,7 +95,7 @@ struct FEventScope
 bEnabled(Channel | CpuChannel)
 ```
 
-说明只要 -trace 包含 cpu，则通过 TRACE_CPUPROFILER_EVENT_SCOPE_XXX 宏来定义的 trace 标签都会输出到 Unreal Insights。
+这说明，只要 -trace 包含 cpu，则通过 TRACE_CPUPROFILER_EVENT_SCOPE_XXX 宏来定义的 trace 标签都会输出到 Unreal Insights。
 
 TODO
 
