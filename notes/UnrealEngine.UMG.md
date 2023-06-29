@@ -2,7 +2,7 @@
 id: 6uyp521qc2npimrhkq9kunj
 title: UMG
 desc: ''
-updated: 1688015647217
+updated: 1688038155042
 created: 1686831231691
 ---
 
@@ -20,15 +20,25 @@ created: 1686831231691
 
 # Widget
 
-## VerticalBox
-可作为容器，拥有子节点。
+## TextBlock
+
+参考：[UMG 组件 - TextBlock](https://zhuanlan.zhihu.com/p/136463055)
+
+## Button
+用于用户点击，主要关注四种背景状态
+- Normal：普通状态
+- Hovered：鼠标悬停状态
+- Pressed：鼠标按下时状态
+- Disabled：按钮无效状态
+
+参考：[UMG 组件 - Button](https://zhuanlan.zhihu.com/p/102089811)
 
 ## Image 
 常用作背景板、按钮按下前后 UI 状态切换，具体参考 [UMG 组件 - Image](https://zhuanlan.zhihu.com/p/136472896?utm_medium=social&utm_oi=1565688472064749568&utm_psn=1657724344171253760&utm_source=ZHShareTargetIDMore)。
 
 ## ListView
 参考 UIFaceRoleView
-https://zhuanlan.zhihu.com/p/127184008
+[ListView 详解](https://zhuanlan.zhihu.com/p/127184008)
 
 ListView 功能的运行需要三个对象：
 - ListView：UI ListView
@@ -60,3 +70,31 @@ forloop(ListEntry::OnListItemObjectSet => ListView::OnEntryInitialized)
 
 3. ListView 滑动过程中 ListEntry 消失
 => ListView::OnEntryReleased
+
+## UMG 布局组件
+可作为容器填充子 Widget，负责管子 Widget 布局。布局组件有多种，包括：Canvas Planel、Overlay Slot、Vertical Box、Horizontal Box。
+
+每个添加到布局组件中的子 Widget，都会新增一个 Slot 属性项，用来定义子 Widget 在 UI 上的位置。因此只要重点关注 Slot 就可以了。
+
+### Canvas Planel
+新增 Slot (Canvas Planel Slot)，这种情况下要定义好子 Widget 的 Anchor、Size、Position、Alignment，就能确认子 Widget 的大小。
+
+Anchor：子组件的对齐方式（左上、右上、居中等）
+ZOrder：当子 Widget 们存在重叠时，ZOrder 决定绘制顺序
+
+### Overlay 
+新增 Slot (Overlay Slot)，子组件只有两种对齐模式：Vertical Alignment 和 Horizontal Alignment。
+
+### Vertical Box
+新增 Slot (Vertical Box Slot)，让子组件垂直布局，水平方向采用 Horizontal Alignment，相当于 Overlay 在垂直方面的特化。
+子组件的 Size 有两种决定方式：Auto 和 Fill。
+- Auto：子组件自己决定大小
+- Fill：子组件在水平、垂直方向上填充 Vertical Box，其中垂直方向上需要设置填充比例，用来和其他子组件划分 Vertical Box 空间。
+此外还有一个 Alignment 属性用来决定子组件在 Vertical Box 里面的对齐方式。这里需要注意 Size 和 Alignment 之间的区别：Size 是你从容器中获得的空间，Alignment 决定空间的分配。
+
+### Horizontal Box
+Horizontal Box 让子组件水平布局，垂直方向采用 Vertical Alignment，相当于 Overlay 在水平方面的特化，其余用法同 Vertical Box。
+
+### Size Box
+Size Box 设置了固定 Size 限制了子组件大小。一些子组件的大小可能不符合用户的期望，这类组件可以在外层套上 Size Box 容器来限制大小
+新增 Slot (Size Box Slot)，可设置属性包括：Padding、Horizontal\Vertical Alignment。
