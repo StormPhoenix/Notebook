@@ -2,7 +2,7 @@
 id: 6uyp521qc2npimrhkq9kunj
 title: UMG
 desc: ''
-updated: 1688038155042
+updated: 1688090667241
 created: 1686831231691
 ---
 
@@ -18,11 +18,11 @@ created: 1686831231691
 [虚幻4渲染编程（UI篇）【第一卷：Slate框架综述】](https://zhuanlan.zhihu.com/p/45682313) 检查 UI 产生的 DC
 [虚幻5渲染编程 (UI篇)【第一卷: Slate渲染框架并通过为UMG拓展MeshUI了解Slate的图元阶段】](https://zhuanlan.zhihu.com/p/387752531) UE 的 UI 为了编辑器牺牲了太多？
 
-# Widget
+# 组件
 
 ## TextBlock
 
-参考：[UMG 组件 - TextBlock](https://zhuanlan.zhihu.com/p/136463055)
+参考: [UMG 组件 - TextBlock](https://zhuanlan.zhihu.com/p/136463055)
 
 ## Button
 用于用户点击，主要关注四种背景状态
@@ -34,11 +34,10 @@ created: 1686831231691
 参考：[UMG 组件 - Button](https://zhuanlan.zhihu.com/p/102089811)
 
 ## Image 
-常用作背景板、按钮按下前后 UI 状态切换，具体参考 [UMG 组件 - Image](https://zhuanlan.zhihu.com/p/136472896?utm_medium=social&utm_oi=1565688472064749568&utm_psn=1657724344171253760&utm_source=ZHShareTargetIDMore)。
+常用作背景板、按钮按下前后 UI 状态切换，具体参考: [UMG 组件 - Image](https://zhuanlan.zhihu.com/p/136472896?utm_medium=social&utm_oi=1565688472064749568&utm_psn=1657724344171253760&utm_source=ZHShareTargetIDMore)。
 
 ## ListView
-参考 UIFaceRoleView
-[ListView 详解](https://zhuanlan.zhihu.com/p/127184008)
+参考: UIFaceRoleView [ListView 详解](https://zhuanlan.zhihu.com/p/127184008)
 
 ListView 功能的运行需要三个对象：
 - ListView：UI ListView
@@ -71,7 +70,7 @@ forloop(ListEntry::OnListItemObjectSet => ListView::OnEntryInitialized)
 3. ListView 滑动过程中 ListEntry 消失
 => ListView::OnEntryReleased
 
-## UMG 布局组件
+## 布局
 可作为容器填充子 Widget，负责管子 Widget 布局。布局组件有多种，包括：Canvas Planel、Overlay Slot、Vertical Box、Horizontal Box。
 
 每个添加到布局组件中的子 Widget，都会新增一个 Slot 属性项，用来定义子 Widget 在 UI 上的位置。因此只要重点关注 Slot 就可以了。
@@ -98,3 +97,6 @@ Horizontal Box 让子组件水平布局，垂直方向采用 Vertical Alignment�
 ### Size Box
 Size Box 设置了固定 Size 限制了子组件大小。一些子组件的大小可能不符合用户的期望，这类组件可以在外层套上 Size Box 容器来限制大小
 新增 Slot (Size Box Slot)，可设置属性包括：Padding、Horizontal\Vertical Alignment。
+
+TODO:
+- UMG 的数据绑定
