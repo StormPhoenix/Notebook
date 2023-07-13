@@ -130,7 +130,7 @@ classDiagram
 流程：
 1. 判断当前 Shader 类型(VetextShader, PixelShader, etc)，确定要写入到哪一块内存数据(FMeshDrawShaderBindings 负责分配 FData 内存数据)
 2. 开始填充 Shader 实参数据。拿到参数索引(BaseIndex)，依据索引计算参数填充位置(FMeshDrawSingleShaderBindings 负责填充)
-   1. Shader HLSL 编译过程中搜集 Shader 变量名、Shader 变量索引，按照变量名到索引的映射形式存入 FShaderParameterMap(参考[[阅读笔记.graphics-engineering.unreal-engine.renderpipeline-and-framework-design.shader-bindings#shader-hlsl-变量索引保存位置]])
+   1. Shader HLSL 编译过程中搜集 Shader 变量名、Shader 变量索引，按照变量名到索引的映射形式存入 FShaderParameterMap(参考[[reading-notes.graphics-engineering.unreal-engine.renderpipeline-and-framework-design.shader-bindings#shader-hlsl-变量索引保存位置]])
    2. 每个 Shader 创建时尝试用 Shader 变量名搜索 FShaderParameterMap 里的 Shader HLSL 变量索引(BaseIndex)，然后把变量索引设置到自己的 FShaderXXXParameter 里面。
    #todolist 展示代码
    3. FShaderParameterInfo 的布局存有参数索引信息，因此可以通过参数索引逆搜索参数填充位置(二分搜索) #todolist 详细说明具体搜索过程

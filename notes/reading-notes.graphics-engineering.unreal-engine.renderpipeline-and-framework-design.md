@@ -31,8 +31,8 @@ Keywords:
 3. 执行渲染。案例用了 RHICmdList 类，这里把 RenderTarget，PSO 传给了 RHICmdList，不知道其原理，只知道可以用于后续执行绘制。再把 RHICmdList 和顶点数据传入 DrawIndexedPrimitiveUP()，就可以执行绘制了。
 
 UE 相关解释：
-- ENQUEUE_RENDER_COMMAND 宏: [[阅读笔记.graphics-engineering.unreal-engine.renderpipeline-and-framework-design#enqueue_render_command]]
-- RHICmdList: [[阅读笔记.graphics-engineering.unreal-engine.renderpipeline-and-framework-design#rhicmdlist]]
+- ENQUEUE_RENDER_COMMAND 宏: [[reading-notes.graphics-engineering.unreal-engine.renderpipeline-and-framework-design#enqueue_render_command]]
+- RHICmdList: [[reading-notes.graphics-engineering.unreal-engine.renderpipeline-and-framework-design#rhicmdlist]]
 
 总结：
 - Shader 代码和 Shader 类的创建
@@ -63,8 +63,8 @@ UE 相关解释：
    2. 给纹理、纹理采样器变量赋值时采用了 SetTextureParameter() 而不是 SetShaderValue()。
 
 **About:**
-- Shader 参数及赋值方式 [[阅读笔记.graphics-engineering.unreal-engine.renderpipeline-and-framework-design#shaderparameter]]
-- VertexDecleration 参考 [[阅读笔记.graphics-engineering.unreal-engine.renderpipeline-and-framework-design#vertex-buffer--vertex-declaration]]
+- Shader 参数及赋值方式 [[reading-notes.graphics-engineering.unreal-engine.renderpipeline-and-framework-design#shaderparameter]]
+- VertexDecleration 参考 [[reading-notes.graphics-engineering.unreal-engine.renderpipeline-and-framework-design#vertex-buffer--vertex-declaration]]
 
 ## 案例三
 https://zhuanlan.zhihu.com/p/36696626
@@ -75,7 +75,7 @@ https://zhuanlan.zhihu.com/p/36696626
 
 **Process:**
 1. UniformBuffer: Shader 代码新增 Uniform 参数，Shader 类应做如下设置
-   1. C++ 端声明定义 Uniform。和一般 float\Texture、TextureSampler 变量不同，Uniform 变量需要通过宏声明(UE5 之后宏变动很大，参考[[阅读笔记.graphics-engineering.unreal-engine.renderpipeline-and-framework-design#shaderparameter]])定义。
+   1. C++ 端声明定义 Uniform。和一般 float\Texture、TextureSampler 变量不同，Uniform 变量需要通过宏声明(UE5 之后宏变动很大，参考[[reading-notes.graphics-engineering.unreal-engine.renderpipeline-and-framework-design#shaderparameter]])定义。
    2. UE 会自动生成该 Uniform 的 HLSL 代码，和 C++ 端定义的 Uniform 对应绑定起来，因此不需要用户手动在 Shader 代码中定义 Uniform，也不需要在 Shader 类中做绑定。
    3. 修改 Uniform 的值要用 SetUniformBufferParameterImmediate() 函数。
 
@@ -92,7 +92,7 @@ https://zhuanlan.zhihu.com/p/53836725
 
 **Process:**
 1. Compute Shader 的执行不需要设置 PSO，但需要设置 RenderTarget
-2. 新增 SRV\UAV 两类 Buffer。SRV 是只读 Buffer，UAV 是可读写 Buffer，参考[[阅读笔记.graphics-engineering.unreal-engine.renderpipeline-and-framework-design#shaderparameter]]。
+2. 新增 SRV\UAV 两类 Buffer。SRV 是只读 Buffer，UAV 是可读写 Buffer，参考[[reading-notes.graphics-engineering.unreal-engine.renderpipeline-and-framework-design#shaderparameter]]。
 3. 在 Buffer、Texture 之间复制数据前后，要用 RHILockXXX、RHIUnlockXXX 类函数处理
    1. RHILockBuffer/RHIUnlockBuffer
    2. RHILockTexture/RHIUnlockTexture
@@ -101,7 +101,7 @@ https://zhuanlan.zhihu.com/p/53836725
 https://zhuanlan.zhihu.com/p/61464613
 
 关键点：
-1. ShaderBinding。UE 新的渲染管线中用 ShaderBinding 替代了对 Shader 参数的设置。参考[[阅读笔记.graphics-engineering.unreal-engine.renderpipeline-and-framework-design#shaderbindings]]
+1. ShaderBinding。UE 新的渲染管线中用 ShaderBinding 替代了对 Shader 参数的设置。参考[[reading-notes.graphics-engineering.unreal-engine.renderpipeline-and-framework-design#shaderbindings]]
 # 绘制流程
 （1）绘制资源准备 => （2）Shader 资源准备 => （3）执行绘制
 
@@ -110,9 +110,9 @@ https://zhuanlan.zhihu.com/p/61464613
 
 # PSO
 
-# [[Shader 绑定|阅读笔记.graphics-engineering.unreal-engine.renderpipeline-and-framework-design.shader-bindings]]
+# [[Shader 绑定|reading-notes.graphics-engineering.unreal-engine.renderpipeline-and-framework-design.shader-bindings]]
 
-# [[FVertexFactory|阅读笔记.graphics-engineering.unreal-engine.renderpipeline-and-framework-design.vertex-factory]]
+# [[FVertexFactory|reading-notes.graphics-engineering.unreal-engine.renderpipeline-and-framework-design.vertex-factory]]
 
 # 附录
 # ENQUEUE_RENDER_COMMAND
@@ -164,7 +164,7 @@ Unordered access views are slightly more costly in terms of performance, but all
 
 ### RHI 侧的资源(FRHIResource)在 C++ 侧的封装，再到 Shader 的设置
 
-[[阅读笔记.graphics-engineering.unreal-engine.renderpipeline-and-framework-design.Buffer 对象]]
+[[reading-notes.graphics-engineering.unreal-engine.renderpipeline-and-framework-design.Buffer 对象]]
 
 
 ## FRenderResource

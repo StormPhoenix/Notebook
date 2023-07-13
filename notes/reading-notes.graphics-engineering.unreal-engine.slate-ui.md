@@ -1,6 +1,6 @@
 ---
 id: 6uyp521qc2npimrhkq9kunj
-title: UMG
+title: Slate UI
 desc: ''
 updated: 1689137172820
 created: 1686831231691

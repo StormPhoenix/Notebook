@@ -1,6 +1,6 @@
 ---
 id: bkzfzfyfpcdfalm5j9xfs8h
-title: Slate 渲染与优化
+title: slate-rendering-and-optimization
 desc: ''
 updated: 1688959123232
 created: 1688711770249

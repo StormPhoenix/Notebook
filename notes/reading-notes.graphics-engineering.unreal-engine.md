@@ -90,7 +90,7 @@ https://www.bilibili.com/video/BV1cL411D71J/?vd_source=fe2b354520b868ba69b2aedca
 csv - po 文件转化、导入 UE 
 https://www.youtube.com/watch?v=RkVJ4VDY9_Q
 
-[[阅读笔记.graphics-engineering.unreal-engine.公司内网文章文档]]
+[[reading-notes.graphics-engineering.unreal-engine.公司内网文章文档]]
 
 # Cook 和 Uncooked 的机制
 

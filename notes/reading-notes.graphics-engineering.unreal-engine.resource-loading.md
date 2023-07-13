@@ -1,6 +1,6 @@
 ---
 id: rd7iamdrd779uhdwzh948f7
-title: 资源加载
+title: Resource Loading
 desc: ''
 updated: 1686884249866
 created: 1686883969019

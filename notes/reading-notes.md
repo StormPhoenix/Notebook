@@ -1,6 +1,6 @@
 ---
 id: 8wwcffsrq8vlpxw8ysws75u
-title: 阅读笔记
+title: Reading Notes
 desc: ''
 updated: 1689095396300
 created: 1687928200759

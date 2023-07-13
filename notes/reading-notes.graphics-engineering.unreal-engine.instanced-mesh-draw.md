@@ -1,6 +1,6 @@
 ---
 id: okl6c28rtydk4fp2811te1q
-title: Instanced Static Mesh
+title: Instanced Mesh Draw
 desc: ''
 updated: 1688130169543
 created: 1687971957027
@@ -56,7 +56,7 @@ ISM 相比 StaticMesh 多出了 Instance 数据，定义在 FInstancedStaticMesh
 
 顶点数据的绑定：RenderData->VertexBuffers.XXXVertexBuffer.BindXXXVertexBuffer(XXX)
 实例数据的绑定：PerInstanceRenderData->InstanceBuffer.BindInstanceVertexBuffer(XXX)
-参考：[[阅读笔记.graphics-engineering.unreal-engine.renderpipeline-and-framework-design]]
+参考：[[reading-notes.graphics-engineering.unreal-engine.renderpipeline-and-framework-design]]
 
 ### 顶点渲染数据绑定到 VertexFactory
 
@@ -68,7 +68,7 @@ ISM 相比 StaticMesh 多出了 Instance 数据，定义在 FInstancedStaticMesh
 
 # TODO
 1. StaticMesh 从 GameThread -> RenderThread -> RHIThread -> GPU 整个绘制流程中的数据组织、数据传输以及最终如何绘制的。
-2. UE 的[[阅读笔记.graphics-engineering.unreal-engine.renderpipeline-and-framework-design]](FLocalVertexFactory::FDataType, FVertexStreamComponent, FRHIShaderResourceView)，数据处理函数(ENQUEUE_RENDER_COMMAND)
+2. UE 的[[reading-notes.graphics-engineering.unreal-engine.renderpipeline-and-framework-design]](FLocalVertexFactory::FDataType, FVertexStreamComponent, FRHIShaderResourceView)，数据处理函数(ENQUEUE_RENDER_COMMAND)
    1. FInstnacedStaticMeshDataType
 
 3. 文章
