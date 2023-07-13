@@ -2,7 +2,7 @@
 id: pt6j4jlvumei3xzob2u98de
 title: Dedicated Server
 desc: ''
-updated: 1689267000463
+updated: 1689273602931
 created: 1689158325296
 tags:
   - unrealengine
@@ -10,7 +10,9 @@ tags:
 
 #todolist
 
-教程 ：https://www.cnblogs.com/timy/p/10201818.html
+教程 ：
+
+https://www.cnblogs.com/timy/p/10201818.html
 
 https://github.com/dawnarc/ue4_fps_game/tree/master
 
@@ -46,6 +48,32 @@ https://docs.unrealengine.com/5.2/zh-CN/networking-overview-for-unreal-engine/
 
 # RPC 调用
 网络通信除了涉及到对象复制来同步游戏状态，还有远程进程调用 RPC。
+
+使用 RPC 必然需要弄清楚：谁发起调用，谁负责执行？执行结果有没有返回？是否可靠？
+
+- Server
+- Client
+- Multicast
+
+- Reliable
+- Unreliable
+
+# 如何配置 Actor 可复制
+
+- 要复制哪些属性
+- 当前应不应该复制
+- 先复制谁
+
+# 区分服务器代码和客户端代码
+
+## Network Role
+https://docs.unrealengine.com/5.2/en-US/actor-role-and-remoterole-in-unreal-engine/
+
+服务器永远有 Authority 属性
+
+## 所有权链条概念
+
+IsLocallyControlled()
 
 ----
 
