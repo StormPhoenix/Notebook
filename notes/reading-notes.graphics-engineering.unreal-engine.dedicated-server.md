@@ -2,7 +2,7 @@
 id: pt6j4jlvumei3xzob2u98de
 title: Dedicated Server
 desc: ''
-updated: 1689273602931
+updated: 1689334411981
 created: 1689158325296
 tags:
   - unrealengine
@@ -51,29 +51,114 @@ https://docs.unrealengine.com/5.2/zh-CN/networking-overview-for-unreal-engine/
 
 使用 RPC 必然需要弄清楚：谁发起调用，谁负责执行？执行结果有没有返回？是否可靠？
 
+调用 RPC 的目的之一是为了修改对象状态，那么就要求负责执行 RPC 的 Actor 是可复制的，这样 Server 和 Client 才能知道某个特定 Actor 在对方机器里面是存在的，能够负责 RPC 的实现。
+
+## 谁调用？谁执行
+
 - Server
 - Client
 - Multicast
 
-- Reliable
-- Unreliable
+## 可靠性
+- Reliable \ Unreliable
+
+#todolist 如果 Client 调用了 Client 类型的 RPC 会怎样？
 
 # 如何配置 Actor 可复制
 
-- 要复制哪些属性
-- 当前应不应该复制
-- 先复制谁
+- 要复制哪些属性 (Replicated)
+- 当前应不应该复制 (Relevancy)
+- 先复制谁 (Priority)
+- 复制给谁？什么时候复制？(DOREPLIFETIME_CONDITION)
+
+https://docs.unrealengine.com/5.2/zh-CN/conditional-property-replication-in-unreal-engine/
+
+## 如果要复制整个对象呢 FNetworkGUID
+
+## 如果要复制 Actor 引用的其他 UObject 子对象呢
+https://docs.unrealengine.com/5.2/zh-CN/replicated-subobjects-in-unreal-engine/
+
+## 100 名玩家 + 5000 个 Actor 的对局引起的性能问题
+
+## Replication Graph 用于优化服务器性能
+https://zhuanlan.zhihu.com/p/90427525
+
+## Iris Replication 用于优化服务器性能
+Iris 期望 clien 能够做更多的工作，不要让服务器处理一切。
+
+https://dev.epicgames.com/community/learning/tutorials/Xexv/unreal-engine-experimental-getting-started-with-iris
+
+https://zhuanlan.zhihu.com/p/618566686
+
+# RPC 由哪一台机器执行？Actor 复制到哪一台机器？
+此处又涉及到所有权链条(Owner connection)概念，又能引申出
+- 服务器调用 Client RPC 时，是哪台机器执行执行 RPC ?
+- 服务器触发 Actor 复制时，要把 Actor 复制到哪台 Client 机器？
+
+IsLocallyControlled()
+
+# Online Beacons 轻量级连接
 
 # 区分服务器代码和客户端代码
 
+到底是服务器还是客户端代码，要从两个维度区分：
+- Network Role：所有 Actor 都具备的属性。(1) 描述 Actor 与当前主机的控制状态；(2) 某台机器上 Actor Role = Authority，则该 Actor 需要复制到其他机器。这相当于引入了 Actor - Actor 副本 概念。
+- Network Mode：当前网络运行模式，也是由每个 Actor 各自判断
+
+掌握 Networkd Role 和 Network Mode 的意义后，很容易就能推导出代码应由服务器还是客户端执行。
+
 ## Network Role
+
+本机如何知道特定 Actor 状态是不是由自己负责更新？
+
 https://docs.unrealengine.com/5.2/en-US/actor-role-and-remoterole-in-unreal-engine/
 
-服务器永远有 Authority 属性
+谁对 Actor 有控制权？ROLE_Authority
 
-## 所有权链条概念
+谁来复制 Actor 到其他机器？RemoteRole = ROLE_Authority, Role = ROLE_SimulatedProxy
 
-IsLocallyControlled()
+如果 Actor 不被客户端本机 Controller 控制(ROLE_SimulatedProxy)，那 Actor 的作用只是用来接收 Server 的状态同步
+
+如果 Actor 被客户端本机 Controller 控制(ROLE_AutonomousProxy)，那 Actor 就是升级版的 ROLE_SimulatedProxy，因为它还受客户端本机 Controller 控制。
+
+## Network Mode 
+指网络交互模式
+
+# 关卡切换
+加载新地图时，要销毁旧场景、旧 Actor，创建新场景、新 Actor，那么客户端和服务器之间的游戏状态又是怎么同步的呢？
+
+切换到另一个地图之前，要不要切换服务器呢？如果要切换新服务器，那就是非无缝切换，否则就是无缝切换。
+
+#todolist 切换到新地图之前，有哪些 Actor/Controller 需要留存呢？
+
+考虑到不同地图加载存在时间开销，需要迅速加载一个过渡地图让客户端等着。
+
+参考：https://docs.unrealengine.com/5.2/zh-CN/travelling-in-multiplayer-in-unreal-engine/
+
+讲了关卡切换过程中简单的调用流程，核心思路：采用状态图管理当前关卡状态，然后轮询(Tick())状态，根据查到的状态进行不同的操作。
+https://zhuanlan.zhihu.com/p/60622022
+
+弄这么多状态的原因，我猜测是地图切换的种类太多了，文章里写了四种，但实际上不同的切换对应到底层设计的就是状态转换过程。
+
+UE 提供的三个 RPC 切换函数：
+- UEngine::Browse 断开连接，阻塞式切换 
+- UWorld::ServerTravel : 带着所有客户端转移到新地图
+- APlayerController::ClientTravel : 转到新服务器
+
+后两个底层切换函数内部调用 Browse()，这个会重置客户端和服务器的连接，是所谓非无缝切换，如果要实现无缝切换，只能让服务器调用 ServerTravel，依次对 Client 调用 ClientTravel，设置属性 UseSeamlessTravel 为 True，避免内部调用 Browse()，而是调用 FSeamlessTraverHandler::StartTravel() 来轮询客户端新地图是否有加载完毕。FSeamlessTraverHandler::StartTravel 调用过程中并不会销毁 NetDriver，所以连接不会断开。
+
+核心函数：FSeamlessTraverHandler::StartTravel()
+
+参考：https://blog.csdn.net/u012999985/article/details/78484511
+
+
+## 关卡切换时保留的函数
+
+# 编辑器上的运行和部署发布
+
+#todolist
+
+UnrealEngine 教程上部署时分别构建了 Server 和 Client 版本，但是 github 上的 fps 项目在编辑器里面直接启动了CS，并没有做两次构建
 
 ----
 

@@ -2,7 +2,7 @@
 id: 8wwcffsrq8vlpxw8ysws75u
 title: Reading Notes
 desc: ''
-updated: 1689095396300
+updated: 1689309437881
 created: 1687928200759
 ---
 
@@ -33,6 +33,7 @@ created: 1687928200759
 
 https://www.zhihu.com/question/396711224/answer/1242150477
 
+- [ ] 被统治的艺术
 - [ ] 万物简史
 - [ ] 什么是数学
 - [ ] 从一到无穷大
