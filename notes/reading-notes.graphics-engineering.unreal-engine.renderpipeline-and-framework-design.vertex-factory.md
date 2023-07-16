@@ -2,7 +2,7 @@
 id: qoifni239nr9qowj0mwy4vt
 title: Vertex Factory
 desc: ''
-updated: 1689154863566
+updated: 1689528250415
 created: 1689067138535
 tags:
   - unrealengine
@@ -20,16 +20,15 @@ tags:
 
 #todolist 复习 FVertexDeclaration 具体写法
 
-# Article Conclusion (1)
+# Step 1: FVertexFactory 创建 VertexDeclaration
 
-参考： [[VertexFactory 相关类概述 | proxy.unrealengine.renderpipeline#vertexfactory-class-overview]]
-
-封装之后相关类：
+## 顶点数据存储位置 FVertexStreamComponent
 - FVertexStreamComponent: 封装顶点数据：VertexBuffer, StreamOffset, Offset, Stride 
 - FStaticMeshDataType: 封装不同类型的顶点数据(Position, Color, TangentBasis)，用 FVertexStreamComponent 封装.
 
 > FVertexFactory 持有 FStaticMeshDataType 及其子类变量，用于存储顶点数据。如果是自定义 FVertexFactory 类型，甚至可以不用 UE 定义的 FStaticMeshDataType，只要自己定义一些 FVertexStreamComponent、FRHIShaderResourceView 就行了。
 
+## 顶点布局描述 FVertexDeclaration
 - FVertexElement: 描述 FVertexStreamComponent 和着色器的哪个 VertexBuffer 输入对应起来(StreamIndex, AttributeIndex)；然后据此创建 FRHIVertexDecleration
 - FRHIVertexDecleration: 描述顶点数据输入布局 input layout：VertexBuffer 对应着色器的第几个输入、VertexBuffer 内部数据类型、Offset、Stride 
 
@@ -49,8 +48,9 @@ tags:
 
 #todolist FRHIVertexDecleration 会被缓存起来，被 VertexFactory 复用，这是什么意思？参考 FVertexFactory::InitDeclaration()
 
-# Article Conclusion (2)
-参考：https://zhuanlan.zhihu.com/p/128656015
+参考： [[VertexFactory 相关类概述 | proxy.unrealengine.renderpipeline#vertexfactory-class-overview]]
+
+# Step 2: FVertexFactory 与 HLSL 的绑定
 
 相关类：
 - FVertexStream: 和 FVertexStreamComponent 结构很类似，不知道有什么作用 #todolist FVertexStream 和 FVertexStreamComponent 区别
@@ -59,6 +59,8 @@ tags:
 ## 利用 C++ Macro 绑定 HLSL 代码
 - IMPLEMENT_MATERIAL_SHADER_TYPE 绑定的是 C++ Shader 和 HLSL 中的参数
 - IMPLEMENT_VERTEX_FACTORY_TYPE 绑定的是 C++ VertexFactory 和 HLSL 中的顶点数据
+
+** 所谓的 HLSL 绑定，就是 FVertexFactory 生成一份包含顶点数据说明的 *.ush 文件。**
 
 #todolist DECLARE_VERTEX_FACTORY_TYPE(FLocalVertexFactory) 具体如何实现
 无论是 Shader 还是 VertexFactory 和 HLSL 做绑定时，都会用宏来控制 UberShader 开关，定制自己的 Shader。
@@ -72,7 +74,9 @@ FRenderResource 负责创建释放 FRHIResource
 - FVertexFactory 用 C++ Macro 与 HLSL 绑定在一起，并定制自己的 HLSL 代码
 - FPrimitiveSceneProxy 负责创建 FVertexFactory
 
+参考：https://zhuanlan.zhihu.com/p/128656015
 # Article Conclusion (3)
+# Step 3: 顶点输入数据绑定到 Pipeline (TODO)
 https://zhuanlan.zhihu.com/p/361322348
 
 [[自定义 MeshComponent Part 1 | proxy.unrealengine.renderpipeline#creating-a-custom-mesh-component-in-ue4-part-1]]
