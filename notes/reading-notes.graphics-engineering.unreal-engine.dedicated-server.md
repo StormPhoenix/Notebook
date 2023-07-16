@@ -2,7 +2,7 @@
 id: pt6j4jlvumei3xzob2u98de
 title: Dedicated Server
 desc: ''
-updated: 1689334411981
+updated: 1689525514519
 created: 1689158325296
 tags:
   - unrealengine
@@ -64,6 +64,7 @@ https://docs.unrealengine.com/5.2/zh-CN/networking-overview-for-unreal-engine/
 
 #todolist 如果 Client 调用了 Client 类型的 RPC 会怎样？
 
+----
 # 如何配置 Actor 可复制
 
 - 要复制哪些属性 (Replicated)
@@ -99,6 +100,7 @@ IsLocallyControlled()
 
 # Online Beacons 轻量级连接
 
+----
 # 区分服务器代码和客户端代码
 
 到底是服务器还是客户端代码，要从两个维度区分：
@@ -109,84 +111,67 @@ IsLocallyControlled()
 
 ## Network Role
 
-本机如何知道特定 Actor 状态是不是由自己负责更新？
+Role 告诉了本地游戏某个 Actor 是不是由自己控制。在网路交互模式下，Role 有两个类别：Role 和 RemoteRole
+- Role：本地 Actor 和本机之间的控制关系
+- RemoteRole：本地 Actor 对应的远程 Actor 在远程机器(一般是服务器)上的控制关系。
 
-https://docs.unrealengine.com/5.2/en-US/actor-role-and-remoterole-in-unreal-engine/
+Network Role 取值有三种：
+- ROLE_Authority : 完全由 Server 控制
+- ROLE_SimulatedProxy
+- ROLE_AutonomousProxy：升级版的 ROLE_SimulatedProxy，但由本机 PlayerController 控制，可以向服务器提交 RPC。
 
-谁对 Actor 有控制权？ROLE_Authority
-
-谁来复制 Actor 到其他机器？RemoteRole = ROLE_Authority, Role = ROLE_SimulatedProxy
-
-如果 Actor 不被客户端本机 Controller 控制(ROLE_SimulatedProxy)，那 Actor 的作用只是用来接收 Server 的状态同步
-
-如果 Actor 被客户端本机 Controller 控制(ROLE_AutonomousProxy)，那 Actor 就是升级版的 ROLE_SimulatedProxy，因为它还受客户端本机 Controller 控制。
+参考：https://docs.unrealengine.com/5.2/en-US/actor-role-and-remoterole-in-unreal-engine/
 
 ## Network Mode 
-指网络交互模式
+指网络交互模式，表示当前机器是以什么角色来运行代码的，有三种：
+- 独立运行，即当前机器只运行自己的游戏，不和其他机器做网络交互。
+- 作为服务器运行。
+- 作为客户端运行。
 
+了解网络交互模式的意义时，制作多人交互游戏时，通过判断当前程序以什么模式运行，来定义程序的行为。
+
+## Owner Chain
+ROLE_AutonomousProxy 提到了 Actor 由 PlayerController 控制，这一点是通过 UE 中的所有者链(Owner chain)来控制的。
+
+每个 Actor 有一个 Owner 属性指向另外一个 Acotr，不同 Actor 通过 Owner 属性引用构成链条即为：Owner chain。一个 Actor 的 Owner chain 的最初始节点如果是 PlayerControl，那么代表这个 Actor 由 PlayerController 控制。
+
+----
 # 关卡切换
-加载新地图时，要销毁旧场景、旧 Actor，创建新场景、新 Actor，那么客户端和服务器之间的游戏状态又是怎么同步的呢？
-
-切换到另一个地图之前，要不要切换服务器呢？如果要切换新服务器，那就是非无缝切换，否则就是无缝切换。
-
-#todolist 切换到新地图之前，有哪些 Actor/Controller 需要留存呢？
-
-考虑到不同地图加载存在时间开销，需要迅速加载一个过渡地图让客户端等着。
-
-参考：https://docs.unrealengine.com/5.2/zh-CN/travelling-in-multiplayer-in-unreal-engine/
-
-讲了关卡切换过程中简单的调用流程，核心思路：采用状态图管理当前关卡状态，然后轮询(Tick())状态，根据查到的状态进行不同的操作。
-https://zhuanlan.zhihu.com/p/60622022
-
-弄这么多状态的原因，我猜测是地图切换的种类太多了，文章里写了四种，但实际上不同的切换对应到底层设计的就是状态转换过程。
+两个概念：无缝切换、非无缝切换。
+- 无缝切换：客户端进入新地图不需要断开服务器。
+- 非无缝切换：客户端进入新地图需要断开服务器。
 
 UE 提供的三个 RPC 切换函数：
 - UEngine::Browse 断开连接，阻塞式切换 
 - UWorld::ServerTravel : 带着所有客户端转移到新地图
 - APlayerController::ClientTravel : 转到新服务器
 
-后两个底层切换函数内部调用 Browse()，这个会重置客户端和服务器的连接，是所谓非无缝切换，如果要实现无缝切换，只能让服务器调用 ServerTravel，依次对 Client 调用 ClientTravel，设置属性 UseSeamlessTravel 为 True，避免内部调用 Browse()，而是调用 FSeamlessTraverHandler::StartTravel() 来轮询客户端新地图是否有加载完毕。FSeamlessTraverHandler::StartTravel 调用过程中并不会销毁 NetDriver，所以连接不会断开。
+后两个底层切换函数内部调用 Browse()，这个会重置客户端和服务器的连接，是非无缝切换，如果要实现无缝切换，只能让服务器调用 ServerTravel，依次对 Client 调用 ClientTravel，并设置属性 UseSeamlessTravel 为 True，避免内部调用 Browse()，而是调用 FSeamlessTraverHandler::StartTravel() 来轮询客户端新地图是否有加载完毕。FSeamlessTraverHandler::StartTravel 调用过程中并不会销毁 NetDriver，所以连接不会断开。
 
 核心函数：FSeamlessTraverHandler::StartTravel()
 
-参考：https://blog.csdn.net/u012999985/article/details/78484511
-
-
-## 关卡切换时保留的函数
-
+参考：
+- https://zhuanlan.zhihu.com/p/60622022
+- https://blog.csdn.net/u012999985/article/details/78484511
+- https://docs.unrealengine.com/5.2/zh-CN/travelling-in-multiplayer-in-unreal-engine/
+----
 # 编辑器上的运行和部署发布
+参考 lyra 部署文档： https://docs.unrealengine.com/5.2/zh-CN/setting-up-dedicated-servers-in-unreal-engine/
 
-#todolist
+## 部署服务器
 
-UnrealEngine 教程上部署时分别构建了 Server 和 Client 版本，但是 github 上的 fps 项目在编辑器里面直接启动了CS，并没有做两次构建
+首先了解一下 Build.cs 与 Target.cs 的区别，Build.cs 用来构建库文件，Target.cs 用来构建可执行文件。
+详细解释参考 https://unrealcommunity.wiki/build.cs-hv582z08
+
+1. 修改 Target.cs。设置 Target 的 Type 属性为 TargetType.Server，执行构建该 Target
+2. 在编辑器中 Cook 服务器的资产。
+
+## 部署客户端
+
+1. 修改 Target.cs。设置 Target 的 Type 属性为 TargetType.Client，执行构建该 Target。
+2. 在编辑器中 Cook 客户端资产。
 
 ----
-
-RPC 相关 
-
-#todolist 没看懂类型
-- RPC 类型 ：Server\Client\NetMulticast 
-- 可靠性 ： 能不能保证该 RPC 一定能执行成功(通过多次调用实现来保证成功)
-
-## Unreal Engine 中的 Dedicated Server 与客户端的特点
-- 客户端和服务器的代码写在一起，依据当前机器是 Server 还是 Client 来选择执行 #todolist 补充示例
-- 游戏状态共享机制：游戏状态存储在服务器，部分游戏状态存储只与特定客户端共享、部分游戏状态是服务器和多个客户端共享
-
-** 客户端和服务器的代码写在一起，那么哪些代码是 Server 执行？哪些代码是 Client 执行？**
-### UE 任意对象的控制权
-控制权如何定义
-- Role: 描述机器本地对象由谁控制，有三种取值 ROLE_AutonomousProxy、ROLE_SimulatedProxy、ROLE_Authority
-- RemoteRole: 描述机器本地对象对应的远程对象由谁控制，取值同上
-
-UE 中对象由谁控制？
-- ROLE_Authority : 完全由 Server 控制
-- ROLE_SimulatedProxy : 
-- ROLE_AutonomousProxy
-
-### UE 任意对象的所有者 Owner
-
-链接：
-
 ## Unreal Engine 对象同步机制
 几个问题要解决：
 
@@ -223,59 +208,6 @@ Q4. 怎么同步对象？把对象状态保存起来存到 buffer，Tick 时比�
 - 可复制对象 & 专属链接 有什么关系
 
 ----
-# Article (2)
-
-https://www.cnblogs.com/timy/p/10201818.html
-
-高性能网络库：ACE，libuv，RakNet
-
-----
-
-# Article (3)
-
-#todolist
-[[proxy.unrealengine.Tutorial#networking-in-basic---simple-replication-example]]
-
-## 属性的同步
-
-属性添加 `ReplicatedUsing` 宏，当属性同步后被修改，触发回调函数 `OnFuncationCall` 执行(由 `ReplicatedUsing` 修饰的回调函数仅在客户端执行)
-```c++
-UPROPERTY(ReplicatedUsing = OnFuncationCall)
-float Property;
-
-UFUNCTION()
-void OnFuncationCall();
-```
-
-如果要在蓝图里设置 `ReplicatedUsing`，对应的选项是 `RepNotify`。
-
-## 设置 RPC 函数 
-
-向服务器发起 RPC
-```c++
-UFUNCTION(Server, Reliable, WithValidation)
-void RpcFunc();
-
-// 判断：是否要执行 RpcFunc()
-bool RpcFunc_Validate();
-
-// RpcFunc 函数具体实现
-void RpcFunc_Implementation();
-```
-
-#todolist 为什么不能直接实现 RpcFunc() ? 猜测因为 UE 要自动做反射
 
 项目参考：https://github.com/dawnarc/ue4_fps_game/tree/master
-
-----
-
-# Article (4)
-#todolist
-https://www.cnblogs.com/timy/p/10201818.html
-分别编译打包 Client、Server 版本
-
-# Article (5)
-
-#todolist
-https://docs.unrealengine.com/5.2/zh-CN/networking-and-multiplayer-in-unreal-engine/
 

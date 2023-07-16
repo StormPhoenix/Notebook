@@ -1,8 +1,8 @@
 ---
 id: bkzfzfyfpcdfalm5j9xfs8h
-title: slate-rendering-and-optimization
+title: Slate Rendering And Optimization
 desc: ''
-updated: 1688959123232
+updated: 1689501433363
 created: 1688711770249
 tags:
   - Slate
