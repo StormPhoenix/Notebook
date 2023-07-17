@@ -2,7 +2,7 @@
 id: w7ut3rkfww9seb5zozr4yfh
 title: Unreal Engine
 desc: ''
-updated: 1689137742111
+updated: 1689592478260
 created: 1688384455522
 tags:
   - graphics-engineering
@@ -73,7 +73,11 @@ Dynamic shadow setup
 1. https://zhuanlan.zhihu.com/p/36675543
 2. 这个很重要，从源码讲起：https://scahp.tistory.com/
 3. 剖析 UE 渲染体系：https://www.cnblogs.com/timlly/p/13512787.html
+4. Using Compute Shaders in Unreal Engine 4 https://medium.com/realities-io/using-compute-shaders-in-unreal-engine-4-f64bac65a907#5ff3
+5. 定义 FVertexFactory 用到的两个宏到底做了什么？https://medium.com/realities-io/creating-a-custom-mesh-component-in-ue4-part-1-an-in-depth-explanation-of-vertex-factories-4a6fd9fd58f2#9d1d
 
+# GamePlay 部分
+1. Game Feature 是什么？
 
 # UE 卡通渲染
 https://zhuanlan.zhihu.com/p/559373782
@@ -116,6 +120,11 @@ LogMaterial: Warning: [AssetLog] /Game/HXAssets/Standardfile/sequence/mesh/MI_Ya
 EngineMemoryWarningHandler 检查当前内存占用大小的
 GCurrentTextureMemorySize
 GCurrentRendertargetMemorySize
+ENQUEUE_RENDER_COMMAND
 
 # 蓝图和 C++ 
 https://mp.weixin.qq.com/s/9SY9uf-s3L1vG1Jp7LKkeg
+
+# 从 0 开始搭建引擎
+
+https://www.zhihu.com/question/611627029/answer/3117592990

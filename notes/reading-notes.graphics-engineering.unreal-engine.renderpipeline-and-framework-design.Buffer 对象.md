@@ -2,7 +2,7 @@
 id: yfgqd6zvpawc2lvo8uvqmnq
 title: Buffer 对象
 desc: ''
-updated: 1689152669498
+updated: 1689590029298
 created: 1689063310242
 tags:
   - unrealengine
@@ -46,16 +46,26 @@ FRHIBuffer/FRHITexture 要设置到 Shader 里，需要经过一系列转化：F
 ```mermaid
   classDiagram
   
-  class FRenderResource 
+  class FRenderResource {
+      +InitResource()
+      +UpdateRHI()
+  }
   class FVertexBuffer {
       +FBufferRHIRef VertexBufferRHI
   }
+  class FPositionVertexBuffer {
+      +FShaderResourceViewRHIRef PositionComponentSRV;
+  }
+  class FIndexBuffer
+  class FRawStaticIndexBuffer
   class FRHIResource
   class FRHIBuffer
 
   FRenderResource <|-- FVertexBuffer
+  FRenderResource <|-- FIndexBuffer
+  FIndexBuffer <|-- FRawStaticIndexBuffer
   FRHIResource <|-- FRHIBuffer
-
+  FVertexBuffer <|-- FPositionVertexBuffer
   FVertexBuffer *.. FRHIBuffer
 ```
 
