@@ -2,7 +2,7 @@
 id: yfgqd6zvpawc2lvo8uvqmnq
 title: Buffer 对象
 desc: ''
-updated: 1689590029298
+updated: 1689681505950
 created: 1689063310242
 tags:
   - unrealengine
@@ -69,3 +69,8 @@ FRHIBuffer/FRHITexture 要设置到 Shader 里，需要经过一系列转化：F
   FVertexBuffer *.. FRHIBuffer
 ```
 
+# FRenderResource 操作 
+
+- InitRHI()
+- BeginInitResource() : 推送到渲染线程执行
+- ReleaseResource() : 释放资源

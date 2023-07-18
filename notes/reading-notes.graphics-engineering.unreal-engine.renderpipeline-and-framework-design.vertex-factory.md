@@ -2,7 +2,7 @@
 id: qoifni239nr9qowj0mwy4vt
 title: Vertex Factory
 desc: ''
-updated: 1689598027951
+updated: 1689683528881
 created: 1689067138535
 tags:
   - unrealengine
@@ -111,7 +111,7 @@ void FMeshPassProcessor::BuildMeshDrawCommands()
 
     // Other code ...
 
-    // 保存 PSO 到 MeshDrawCommand
+    // IndexBuffer, PSO 保存到 MeshDrawCommand
     DrawListContext->FinalizeCommand(XXX, PipelineState, &ShadersForDebugging, MeshDrawCommand);
 }
 ```
@@ -126,6 +126,7 @@ bool FMeshDrawCommand::SubmitDrawBegin()
     // 获取 MeshDrawCommand 里保存的 PSO 
     const FGraphicsMinimalPipelineStateInitializer& MeshPipelineState = MeshDrawCommand.CachedPipelineId.GetPipelineState(GraphicsMinimalPipelineStateSet);
 
+    // Graphics Pipeline 绑定到 RHICmdList
     if (MeshDrawCommand.CachedPipelineId.GetId() != StateCache.PipelineId) 
     {
         // 如果当前 RHICmdList 缓存的 PSO 与即将 DrawCall 的 PSO 不一致，则重新设置 RHICmdList 的 PSO
@@ -137,6 +138,7 @@ bool FMeshDrawCommand::SubmitDrawBegin()
         SetGraphicsPipelineState(RHICmdList, GraphicsPSOInit, MeshDrawCommand.StencilRef, EApplyRendertargetOption::CheckApply, bApplyAdditionalState, PSOPrecacheResult);
     }
 
+    // VertexStream 绑定到 RHICmdList
     for (int32 VertexBindingIndex = 0; VertexBindingIndex < MeshDrawCommand.VertexStreams.Num(); VertexBindingIndex ++) 
     {
         const FVertexInputStream& Stream = MeshDrawCommand.VertexStreams[VertexBindingIndex];
@@ -149,6 +151,26 @@ bool FMeshDrawCommand::SubmitDrawBegin()
         MeshDrawCommand.ShaderBindings.SetOnCommandList(RHICmdList, MeshPipelineState.BoundShaderState.AsBoundShaderState(), StateCache.ShaderBindings);
     }
 }
+```
+## FIndexBuffer 绑定到 RHICmdList 
+```c++
+
+void FMeshDrawCommand::SubmitDrawEnd(const FMeshDrawCommand& MeshDrawCommand, uint32 InstanceFactor, FRHICommandList& RHICmdList, FRHIBuffer* IndirectArgsOverrideBuffer, uint32 IndirectArgsOverrideByteOffset) {
+
+    // Other code 
+    RHICmdList.DrawIndexedPrimitive(
+				MeshDrawCommand.IndexBuffer,
+				MeshDrawCommand.VertexParams.BaseVertexIndex,
+				0,
+				MeshDrawCommand.VertexParams.NumVertices,
+				MeshDrawCommand.FirstIndex,
+				MeshDrawCommand.NumPrimitives,
+				MeshDrawCommand.NumInstances * InstanceFactor
+			);
+
+    // Other code
+}
+
 ```
 
 ## ush 与 usf 的区别
@@ -179,6 +201,11 @@ FVertexFactory 与 HLSL template 绑定后会定制 HLSL 代码，但这个 HLSL
 ----
 # Step 4: FVertexFactory 与 HLSL 变量的绑定
 
+通过 FDeformMeshVertexFactoryShaderParameters 来实现。
+
+- IMPLEMENT_TYPE_LAYOUT(你的VF参数)
+- IMPLEMENT_VERTEX_FACTORY_PARAMETER_TYPE(你的VF, ShaderFrequence, 你的VF参数)
+- IMPLEMENT_VERTEX_FACTORY_TYPE(你的VF)
 
 ----
 # Step 5: FVertexFactory 的实现 

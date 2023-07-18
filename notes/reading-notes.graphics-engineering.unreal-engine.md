@@ -2,7 +2,7 @@
 id: w7ut3rkfww9seb5zozr4yfh
 title: Unreal Engine
 desc: ''
-updated: 1689592478260
+updated: 1689667865687
 created: 1688384455522
 tags:
   - graphics-engineering
@@ -75,6 +75,7 @@ Dynamic shadow setup
 3. 剖析 UE 渲染体系：https://www.cnblogs.com/timlly/p/13512787.html
 4. Using Compute Shaders in Unreal Engine 4 https://medium.com/realities-io/using-compute-shaders-in-unreal-engine-4-f64bac65a907#5ff3
 5. 定义 FVertexFactory 用到的两个宏到底做了什么？https://medium.com/realities-io/creating-a-custom-mesh-component-in-ue4-part-1-an-in-depth-explanation-of-vertex-factories-4a6fd9fd58f2#9d1d
+6. https://zhuanlan.zhihu.com/p/339732645
 
 # GamePlay 部分
 1. Game Feature 是什么？
