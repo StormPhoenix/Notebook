@@ -2,7 +2,7 @@
 id: behzhllbkbm9g41qmti21ix
 title: Shader Bindings
 desc: ''
-updated: 1689149168924
+updated: 1689755198400
 created: 1689045215490
 tags:
   - unrealengine
@@ -76,8 +76,8 @@ classDiagram
     class FMeshDrawSingleShaderBindings {
         << 负责将 Shader 实参按照布局信息写入 Data 指定位置 >>
         +uint8 Data
-        +Add(Parameter, Value)
-        - GetUniformBufferStart()
+        +Add(Parameter, Value)  // 此处会检查 Parameter 和 Value 的类型是否能对应上
+        -GetUniformBufferStart()
         -WriteBindingUniformBuffer(Value, BaseIndex)
         -WriteBindingXXX(Value, BaseIndex)
     }
