@@ -165,7 +165,7 @@ Unordered access views are slightly more costly in terms of performance, but all
 
 ### RHI 侧的资源(FRHIResource)在 C++ 侧的封装，再到 Shader 的设置
 
-[[reading-notes.graphics-engineering.unreal-engine.renderpipeline-and-framework-design.Buffer 对象]]
+[[reading-notes.graphics-engineering.unreal-engine.renderpipeline-and-framework-design.buffer-objects]]
 
 
 ## FRenderResource
