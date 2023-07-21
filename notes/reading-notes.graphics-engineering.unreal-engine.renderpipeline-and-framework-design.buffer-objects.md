@@ -1,14 +1,19 @@
 ---
 id: yfgqd6zvpawc2lvo8uvqmnq
-title: Buffer 对象
+title: Buffer Objects
 desc: ''
-updated: 1689681505950
+updated: 1689902993377
 created: 1689063310242
 tags:
   - unrealengine
 ---
 
 #todolist
+- https://www.cnblogs.com/timlly/p/15156626.html
+
+# 不同 Buffer / ShaderResource 设置到 RHICmdList 的不同 API 
+
+#todolist 想清楚为什么 API 会设计的不一致？去看看底层调用源码
 
 FRHIUniformBuffer
 RHICmdList.SetShaderUniformBuffer
