@@ -2,7 +2,7 @@
 id: 7n7bxhe0z3mrj72e596d9s6
 title: Coroutine
 desc: ''
-updated: 1689925793147
+updated: 1690163391661
 created: 1689920547615
 ---
 
@@ -100,7 +100,7 @@ inline TestCoroutine
 ```
 
 可以发现，`yield return count` 实际上是创建实现了 `IEnumerator` 接口的类，for 循环代码段被编译到 `MoveNext()` 函数，该函数每次调用就相当于执行了一次 for 循环，并且：
-1. `switch` 和 `<>1__state` 联合判断 for 循环是否执行完毕；
+1. `switch` 和 `<>1__state` 联合判断 for 循环是否执行完毕，没完成则执行后面的函数体；
 2. `<>2__current` 保存每次 `count` 的值；
 3. `<count>5__1` 等价于原始代码中的 `count` 变量。
 
