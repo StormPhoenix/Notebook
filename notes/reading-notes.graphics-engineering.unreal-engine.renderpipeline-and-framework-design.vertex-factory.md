@@ -2,11 +2,19 @@
 id: qoifni239nr9qowj0mwy4vt
 title: Vertex Factory
 desc: ''
-updated: 1689683528881
+updated: 1690217108238
 created: 1689067138535
 tags:
   - unrealengine
 ---
+
+VertexFactory 作用：
+- 提供顶点数据
+- 描述顶点数据布局
+- 与 HLSL 顶点数据做绑定
+- 与 HLSL 变量做绑定
+
+----
 
 作用：
 - 绑定 Shader 
@@ -185,6 +193,47 @@ FVertexFactory 与 HLSL template 绑定后会定制 HLSL 代码，但这个 HLSL
 
 - IMPLEMENT_VERTEX_FACTORY_TYPE
   实现 FVertexFactory，生成 Shader 变体 HLSL 代码。
+
+`FVertexFactory` 的开头实现有一个 `DECLARE_VERTEX_FACTORY_TYPE` 宏，看它的展开：
+```c++
+class FMyVertexFactory : public FLocalVertexFactory
+{
+public: 
+    static FVertexFactoryType StaticType; 
+    virtual FVertexFactoryType* GetType() const override;
+
+    // other code // 
+}
+```
+
+在对应的 cpp 文件也有一段 `IMPLEMENT_VERTEX_FACTORY_TYPE` 展开
+```c++
+FVertexFactoryType FDeformMeshVertexFactory::StaticType(L"FDeformMeshVertexFactory",
+                                                        L"/UEStudyLibrary/Shaders/Private/MyLocalVertexFactory.ush",
+                                                        EVertexFactoryFlags::UsedWithMaterials |
+                                                        EVertexFactoryFlags::SupportsStaticLighting |
+                                                        EVertexFactoryFlags::SupportsDynamicLighting |
+                                                        EVertexFactoryFlags::SupportsPrecisePrevWorldPos |
+                                                        EVertexFactoryFlags::SupportsPositionOnly,
+                                                        &ConstructVertexFactoryParameters<FDeformMeshVertexFactory>,
+                                                        &GetVertexFactoryParametersLayout<FDeformMeshVertexFactory>,
+                                                        &GetVertexFactoryParametersElementShaderBindings<
+	                                                        FDeformMeshVertexFactory>,
+                                                        FDeformMeshVertexFactory::GetPSOPrecacheVertexFetchElements,
+                                                        FDeformMeshVertexFactory::ShouldCompilePermutation,
+                                                        FDeformMeshVertexFactory::ModifyCompilationEnvironment,
+                                                        FDeformMeshVertexFactory::ValidateCompiledResult);
+
+FVertexFactoryType* FDeformMeshVertexFactory::GetType() const 
+{ 
+    return &StaticType; 
+}
+```
+
+宏展开后发现，自定义的 `FMyVertexFactory` 类实现的函数全部交给 FVertexFactoryType 代理。引擎内部操作的 VF 对象是 FVertexFactoryType 而不是 VF。参考 `FVertexFactoryType` 构造函数发现，创建的 `FVertexFactoryType` 对象会被添加到全局变量 `GVFTypeList` 里，所以当引擎需要处理 VF、HLSL 时会遍历 `GVFTypeList`。
+
+#todolist 继续分析两个宏是怎么在 VF 和 HLSL 之间建立关系的。
+
 
 #todolist 
 

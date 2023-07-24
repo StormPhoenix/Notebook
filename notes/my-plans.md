@@ -2,7 +2,7 @@
 id: mi8gwypxhgyj0ltqzxlwhjb
 title: My Plans
 desc: ''
-updated: 1690207008686
+updated: 1690213461307
 created: 1690204508728
 ---
 
@@ -17,7 +17,7 @@ created: 1690204508728
 
 # 图形学技术 
 
-Game 101 重学
+- [ ] Game 101 重学
 
 # 读书
 - [ ] 北大马会重读
