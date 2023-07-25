@@ -2,7 +2,7 @@
 id: qoifni239nr9qowj0mwy4vt
 title: Vertex Factory
 desc: ''
-updated: 1690217108238
+updated: 1690248171722
 created: 1689067138535
 tags:
   - unrealengine
@@ -231,6 +231,8 @@ FVertexFactoryType* FDeformMeshVertexFactory::GetType() const
 ```
 
 宏展开后发现，自定义的 `FMyVertexFactory` 类实现的函数全部交给 FVertexFactoryType 代理。引擎内部操作的 VF 对象是 FVertexFactoryType 而不是 VF。参考 `FVertexFactoryType` 构造函数发现，创建的 `FVertexFactoryType` 对象会被添加到全局变量 `GVFTypeList` 里，所以当引擎需要处理 VF、HLSL 时会遍历 `GVFTypeList`。
+
+> keywords: FVertexFactoryType::GetTypeList()
 
 #todolist 继续分析两个宏是怎么在 VF 和 HLSL 之间建立关系的。
 
