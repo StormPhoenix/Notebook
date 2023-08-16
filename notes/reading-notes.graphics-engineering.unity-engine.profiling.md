@@ -2,7 +2,7 @@
 id: u4d4n9owk8x9f6ck5o0wx9x
 title: Profiling
 desc: ''
-updated: 1691039083020
+updated: 1691064202833
 created: 1689904655439
 tags:
   - graphics-engineering
@@ -16,3 +16,6 @@ https://learn.unity.com/tutorial/working-with-the-frame-debugger#5fed99a1edbc2a3
 https://catlikecoding.com/unity/tutorials/scriptable-render-pipeline/custom-pipeline/
 
 - 检查 Coroutine 运行 https://docs.unity3d.com/Manual/Coroutines.html
+
+# Statistic window 
+https://docs.unity3d.com/Manual/RenderingStatistics.html
