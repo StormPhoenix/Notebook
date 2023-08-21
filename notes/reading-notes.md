@@ -2,7 +2,7 @@
 id: 8wwcffsrq8vlpxw8ysws75u
 title: Reading Notes
 desc: ''
-updated: 1689309437881
+updated: 1692628574727
 created: 1687928200759
 ---
 
@@ -53,3 +53,8 @@ https://www.zhihu.com/question/608652832/answer/3095595591
 # bilibili
 
 [【脑科学】赌博暴富如何改造大脑,扭曲多巴胺预期让人陷入欲望深渊,来认识大脑后门](https://www.bilibili.com/video/BV1S14y1o7ZJ/?share_source=copy_web&vd_source=5f4fa7a0ef6da3b59674892344e9ef8f)
+
+> 一个不为利润的文化，是有可能的。
+> 一个普通劳动者成为主角的文化，是有可能的。
+> 一个不以考试为目的的教育，一个学费低廉的教育，是有可能的。
+> 一个不以赢利为目的、为最广大劳苦大众服务的、廉价的医疗保障体系是有可能的。
