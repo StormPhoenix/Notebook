@@ -2,7 +2,7 @@
 id: mi8gwypxhgyj0ltqzxlwhjb
 title: My Plans
 desc: ''
-updated: 1690334508506
+updated: 1692950585988
 created: 1690204508728
 ---
 
@@ -20,4 +20,5 @@ created: 1690204508728
 - [ ] Games101
 
 # 读书
+- [x] 文化大革命的理论基础
 - [ ] 北大马会重读
