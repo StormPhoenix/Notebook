@@ -22,3 +22,5 @@
 # 图形学随笔
 
 在做技术的初级阶段，非常忌讳只盯着一个小领域死磕，尤其是做图形学的。只知道 UE 管线，就不能了解 Unity SRP 管线设计更先进；只研究 Rendering，就不知道 GamePlay、PCG、Physics 待解决的问题也很多；对其他领域的不了解，反过来又制约了自己研究领域的深度、适用度。
+
+[TODO-list](./notes/tags.todolist.md)

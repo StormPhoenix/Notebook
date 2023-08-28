@@ -2,16 +2,28 @@
 id: fffwegyk486gl4igip59pdy
 title: Todolist
 desc: ''
-updated: 1692119865366
+updated: 1693236984287
 created: 1688129366313
 ---
 
-- Unreal 源代码阅读
-  - VertexFactory 
-  - Shader & ShaderBindings
-  - Instance Mesh Component 
-  - HISM 
-- 熟悉 Unity
-  - Catlikecoding tutorials
-- Graphics API - 从 OpenGL 到 Vulkan
-- 左派理论学习
+# 图形学
+## Unreal 
+- Unreal 源码理解
+  - [ ] VertexFactory 
+  - [ ] Shader & ShaderBindings
+  - [ ] ISM (Instance Mesh Component)
+  - [ ] HISM 及其改造
+
+## Unity
+- Unity 使用
+  - [ ] Catlikecoding tutorials
+
+## Hardware API
+- Vulkan
+  - [ ] Vulkan tutorials
+
+# 阅读
+- [ ] 中国官僚政治研究
+- [ ] 经济学原理
+- [ ] 文革史
+- [x] 文化大革命的理论基础
