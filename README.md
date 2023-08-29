@@ -1,6 +1,9 @@
 # TODO-list
 参考：[TODO-list](./notes/tags.todolist.md)
 # 写文章的几点思考
+
+**Reading > Programming !**
+
 ## 技术文章
 技术文章的目标：要有一套总括性的逻辑框架来描述技术对象，让阅读者快速了解技术的原理、运行流程，并能手动实现初级功能。
 
