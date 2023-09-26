@@ -1,8 +1,7 @@
-# TODO-list
-参考：[TODO-list](./notes/tags.todolist.md)
-# 写文章的几点思考
+# 怎么学技术
+当你的编码技巧比较熟练之后就要明白，阅读比写代码重要，学会总结又比阅读更重要。
 
-* **Reading > Programming !**
+> Writing >> Reading >> Programing !!!
 
 ## 技术文章
 技术文章的目标：要有一套总括性的逻辑框架来描述技术对象，让阅读者快速了解技术的原理、运行流程，并能手动实现初级功能。
