@@ -2,7 +2,7 @@
 id: 57wtylur090ehnikh8v4aw6
 title: Graphics Engineering
 desc: ''
-updated: 1691046389600
+updated: 1696907547660
 created: 1689136596785
 tags:
   - graphics-engineering
@@ -45,11 +45,12 @@ UE 多线程渲染
 https://zhuanlan.zhihu.com/p/583406953
 
 # Unity
-- Unity 渲染管线，自定义 Scriptable Rendering Pipeline (SRP), Tile Base / Cluster Forward + 管线
-> URP(Universal Render Pipeline)
-> SRP(Scriptable Rendering Pipeline)
+1. Catlikecoding tutorials https://catlikecoding.com/unity/tutorials/
+2. Unity 渲染管线，自定义 Scriptable Rendering Pipeline (SRP), Tile Base / Cluster Forward + 管线
+- URP(Universal Render Pipeline)
+- SRP(Scriptable Rendering Pipeline)
 
-## Catlikecoding tutorials
+
 ----
 - [Object Management](https://catlikecoding.com/unity/tutorials/object-management/)
 - [Precedual Grid](https://catlikecoding.com/unity/tutorials/procedural-grid/)
