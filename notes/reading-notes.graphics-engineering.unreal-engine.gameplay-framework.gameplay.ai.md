@@ -2,7 +2,7 @@
 id: 265b68hfujmt7ppxht554gk
 title: Ai
 desc: ''
-updated: 1701228125966
+updated: 1701605769129
 created: 1699327810201
 ---
 
@@ -119,25 +119,4 @@ Pawn 挂载的 UInputComponent 组件用来绑定输入输出映射。Player 创
 * UFGHeroComponent 绑定 PlayerController 的按键映射
 具体到 Lyra 项目，有一个 HeroComponent 继承了 IGameFrameworkInitStateInterface 接口，当项目初始化时触发 HeroComponent 的初始化动作，用户在这个接口内处理 EnhancedInputComponent 的事件绑定，将 IA 绑定到 EnhancedInputSystem。而 HeroComponent 又是挂载到 Pawn 上的，从 Lyra 代码来看，只要一个 Controller 只要持有了 Pawn，那么 Pawn 上挂载的 HeroComponent 就会去给 Pawn 上的 InputComponet 绑定按键映射。
 
-```
-UEnhancedInputLocalPlayerSubsystem* Subsystem = LP->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>();
-UFGInputComponent* FGIC = Cast<UFGInputComponent>(Pawn->PlayerInputComponent);
-FGIC->AddInputMappings(InputConfig, Subsystem);
-
-// Add mappings 
-FGIC->BindAbilityActions(InputConfig, this, &ThisClass::Input_AbilityInputTagPressed, &ThisClass::Input_AbilityInputTagReleased, /*out*/ BindHandles);
-FGIC->BindNativeAction(InputConfig, FGGameplayTags::InputTag_Move, ETriggerEvent::Triggered, this, &ThisClass::Input_Move, /*bLogIfNotFound=*/ false);
-
-```
-
-综上：
-1. UFGHeroComponent 给 Pawn 上的 UInputComponent 挂载绑定按键映射函数。
-2. 按键映射部分采用了 EnhancedInputSystem。
-3. 映射函数由 ASC 实现。
-
-(1) 输入控制
-ref: https://docs.unrealengine.com/5.3/en-US/input-in-unreal-engine/
-
-触发点：APlayerController::TickPlayerInput()。PlayerController 接收输入事件(ProcessPlayerInput(), 由 UPlayerInput 处理) -> EnhancedInputSystem 接管处理，检查收到的 Action 是否有绑定事件，若有则触发绑定的事件。
-
-已知 PlayerController 控制的 Pawn 会自动为当前 Controller 绑定 InputAction，那么做多人控制时，就要中断这个绑定过程，不能让 Controller 生成 Pawn
+# 最终幻想 7 重制版 AI 设计
