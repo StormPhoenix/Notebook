@@ -2,7 +2,7 @@
 id: 265b68hfujmt7ppxht554gk
 title: Ai
 desc: ''
-updated: 1701605769129
+updated: 1701636415688
 created: 1699327810201
 ---
 
@@ -119,4 +119,4 @@ Pawn 挂载的 UInputComponent 组件用来绑定输入输出映射。Player 创
 * UFGHeroComponent 绑定 PlayerController 的按键映射
 具体到 Lyra 项目，有一个 HeroComponent 继承了 IGameFrameworkInitStateInterface 接口，当项目初始化时触发 HeroComponent 的初始化动作，用户在这个接口内处理 EnhancedInputComponent 的事件绑定，将 IA 绑定到 EnhancedInputSystem。而 HeroComponent 又是挂载到 Pawn 上的，从 Lyra 代码来看，只要一个 Controller 只要持有了 Pawn，那么 Pawn 上挂载的 HeroComponent 就会去给 Pawn 上的 InputComponet 绑定按键映射。
 
-# 最终幻想 7 重制版 AI 设计
+不同游戏的 AI 设计分析：[[reading-notes.graphics-engineering.unreal-engine.gameplay-framework.gameplay.ai.ai-design-analysis]]
