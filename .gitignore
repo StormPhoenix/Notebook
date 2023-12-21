@@ -4,7 +4,6 @@ build
 seeds
 .next
 pods/service-connections
-assets/
 .idea/*
 **/.vscode/**
 **/.DS_Store
